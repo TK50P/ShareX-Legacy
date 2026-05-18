@@ -28,7 +28,8 @@ Check `Process embedded files` and click `Extract Files`.
 Open Inno Setup Compiler and locate your `install_script.iss`.
 
 Add this code in bottom.
-```[Code]
+```
+[Code]
 procedure InitializeWizard;
 begin
   if not IsAdmin then
