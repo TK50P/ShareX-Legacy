@@ -14,38 +14,81 @@
 <p align="center"><a href="https://getsharex.com"><img src="https://getsharex.com/img/ShareX_Screenshot.png" alt="ShareX Screenshot"/></a></p>
 <p align="center">For further information please check our <a href="https://getsharex.com">website</a></p>
 
-## Links
-* Official website: https://getsharex.com
-* GitHub: https://github.com/ShareX/ShareX
-* Changelog: https://getsharex.com/changelog
-* Privacy policy: https://getsharex.com/privacy-policy
-* Donate: https://getsharex.com/donate
-* Twitter: https://twitter.com/ShareX
-* Discord: https://discord.gg/ShareX
-* Reddit: https://www.reddit.com/r/sharex
-* Steam page: https://store.steampowered.com/app/400040/ShareX/
-* Microsoft Store page: https://apps.microsoft.com/detail/9nblggh4z1sp
+## How to Build
+You need two programs.
 
-## Documents
-* Image effects: https://getsharex.com/image-effects
-* Actions: https://getsharex.com/actions
-* Dev builds: https://getsharex.com/docs/dev-builds
-* Keybinds: https://getsharex.com/docs/keybinds
-* Scrolling screenshot: https://getsharex.com/docs/scrolling-screenshot
-* Command line arguments: https://getsharex.com/docs/command-line-arguments
-* Translation: https://getsharex.com/docs/translation
-* OCR: https://getsharex.com/docs/ocr
-* Custom uploader: https://getsharex.com/docs/custom-uploader
-* Amazon S3 guide: https://getsharex.com/docs/amazon-s3
-* Google Cloud Storage guide: https://getsharex.com/docs/google-cloud-storage
-* Cloudflare R2 guide: https://getsharex.com/docs/cloudflare-r2
-* Brand assets: https://getsharex.com/brand-assets
+[InnoUnpacker](https://github.com/jrathlev/InnoUnpacker-Windows-GUI)
 
-## Star History
-<a href="https://www.star-history.com/?repos=ShareX%2FShareX&type=date&legend=bottom-right">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=ShareX/ShareX&type=date&theme=dark&legend=bottom-right" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=ShareX/ShareX&type=date&legend=bottom-right" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=ShareX/ShareX&type=date&legend=bottom-right" />
- </picture>
-</a>
+[Inno Setup](https://jrsoftware.org/isinfo.php)
+
+Open InnoUnpacker and locate your ShareX Installer Files.
+
+Check `Process embedded files` and click `Extract Files`.
+
+Open Inno Setup Compiler and locate your `install_script.iss`.
+
+Add this code in bottom.
+```[Code]
+procedure InitializeWizard;
+begin
+  if not IsAdmin then
+  begin
+    WizardForm.DirEdit.Text := ExpandConstant('{userpf}\ShareX.exe');
+  end;
+end;
+
+function InitializeUninstall(): Boolean;
+var
+  ErrorCode: Integer;
+begin
+  if CheckForMutexes('ShareX.exe') then
+  begin
+    if MsgBox('Uninstall has detected that ShareX.exe is currently running.' + #13#10#13#10 + 'Would you like to close it?', mbError, MB_YESNO) = IDYES then
+    begin
+      Exec('taskkill.exe', '/f /im ShareX.exe', '', SW_HIDE, ewWaitUntilTerminated, ErrorCode);
+    end
+    else
+    begin
+      Result := False;
+      Exit;
+    end;
+  end;
+
+  Result := True;
+end;
+
+function CmdLineParamExists(const value: string): Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+  for i := 1 to ParamCount do
+    if CompareText(ParamStr(i), value) = 0 then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
+function IsUpdating(): Boolean;
+begin
+  Result := CmdLineParamExists('/UPDATE');
+end;
+
+function IsNoRun(): Boolean;
+begin
+  Result := CmdLineParamExists('/NORUN');
+end;
+
+function IsPuushMode(): Boolean;
+begin
+  Result := CmdLineParamExists('-puush');
+end;
+
+function DesktopIconExists(): Boolean;
+begin
+  Result := FileExists(ExpandConstant('{userdesktop}\ShareX.lnk'));
+end;
+```
+
+Now click Play Button and done.
