@@ -41,55 +41,59 @@
             </Button>
         </Grid>
 
-        <CheckBox Content="Follow system theme"
-                  IsChecked="{Binding EditorUseSystemTheme, Mode=TwoWay}"
-                  Margin="0,0,0,10"/>
+        <controls:LabeledToggleSwitch Label="Follow system theme"
+                          IsChecked="{Binding EditorUseSystemTheme, Mode=TwoWay}"
+                          Margin="0,0,0,10"/>
 
-        <StackPanel Spacing="4" Margin="0,0,0,12"
-                    IsVisible="{Binding CanEditEditorTheme}">
-            <TextBlock Text="Theme"/>
-            <ComboBox ItemsSource="{Binding EditorThemeOptions}"
-                      SelectedItem="{Binding EditorTheme, Mode=TwoWay}"
-                      HorizontalAlignment="Stretch"/>
-        </StackPanel>
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="0,0,0,12"
+              IsVisible="{Binding CanEditEditorTheme}">
+            <TextBlock Text="Theme"
+                   VerticalAlignment="Center"/>
+            <ComboBox Grid.Column="1"
+                  ItemsSource="{Binding EditorThemeOptions}"
+                  SelectedItem="{Binding EditorTheme, Mode=TwoWay}"
+                  VerticalAlignment="Center"/>
+        </Grid>
 
-        <CheckBox Content="Follow system accent color"
-                  IsChecked="{Binding EditorUseSystemAccentColor, Mode=TwoWay}"
-                  Margin="0,0,0,10"/>
+        <controls:LabeledToggleSwitch Label="Follow system accent color"
+                          IsChecked="{Binding EditorUseSystemAccentColor, Mode=TwoWay}"
+                          Margin="0,0,0,10"/>
 
-        <StackPanel Spacing="4" Margin="0,0,0,18"
-                    IsVisible="{Binding CanEditEditorAccentColor}">
-            <TextBlock Text="Accent color"/>
-            <controls:ColorPickerDropdown SelectedColorValue="{Binding EditorAccentColor, Mode=TwoWay}"
-                                          HorizontalAlignment="Stretch"/>
-        </StackPanel>
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="0,0,0,12"
+              IsVisible="{Binding CanEditEditorAccentColor}">
+            <TextBlock Text="Accent color"
+                   VerticalAlignment="Center"/>
+            <controls:ColorPickerDropdown Grid.Column="1"
+                          SelectedColorValue="{Binding EditorAccentColor, Mode=TwoWay}"
+                          VerticalAlignment="Center"/>
+        </Grid>
 
-        <CheckBox Content="Remember window state"
-                  IsChecked="{Binding EditorRememberWindowState, Mode=TwoWay}"
-                  Margin="0,0,0,8"/>
+        <controls:LabeledToggleSwitch Label="Remember window state"
+                                      IsChecked="{Binding EditorRememberWindowState, Mode=TwoWay}"
+                                      Margin="0,0,0,8"/>
 
-        <CheckBox Content="Show exit confirmation"
-                  IsChecked="{Binding EditorShowExitConfirmation, Mode=TwoWay}"
-                  Margin="0,0,0,8"/>
+        <controls:LabeledToggleSwitch Label="Show exit confirmation"
+                                      IsChecked="{Binding EditorShowExitConfirmation, Mode=TwoWay}"
+                                      Margin="0,0,0,8"/>
 
-        <CheckBox Content="Zoom to fit on open"
-                  IsChecked="{Binding EditorZoomToFitOnOpen, Mode=TwoWay}"
-                  Margin="0,0,0,8"/>
+        <controls:LabeledToggleSwitch Label="Zoom to fit on open"
+                                      IsChecked="{Binding EditorZoomToFitOnOpen, Mode=TwoWay}"
+                                      Margin="0,0,0,8"/>
 
-        <CheckBox Content="Quick crop"
-                  IsChecked="{Binding EditorQuickCrop, Mode=TwoWay}"
-                  Margin="0,0,0,8"/>
+        <controls:LabeledToggleSwitch Label="Quick crop"
+                                      IsChecked="{Binding EditorQuickCrop, Mode=TwoWay}"
+                                      Margin="0,0,0,8"/>
 
-        <CheckBox Content="Auto close editor on task"
-                  IsChecked="{Binding EditorAutoCloseEditorOnTask, Mode=TwoWay}"
-                  Margin="0,0,0,8"/>
+        <controls:LabeledToggleSwitch Label="Auto close editor on task"
+                                      IsChecked="{Binding EditorAutoCloseEditorOnTask, Mode=TwoWay}"
+                                      Margin="0,0,0,8"/>
 
-        <CheckBox Content="Auto copy image to clipboard"
-                  IsChecked="{Binding EditorAutoCopyImageToClipboard, Mode=TwoWay}"
-                  Margin="0,0,0,8"/>
+        <controls:LabeledToggleSwitch Label="Auto copy image to clipboard"
+                                      IsChecked="{Binding EditorAutoCopyImageToClipboard, Mode=TwoWay}"
+                                      Margin="0,0,0,8"/>
 
-        <CheckBox Content="Show insert image dialog"
-                  IsChecked="{Binding EditorShowInsertImageDialog, Mode=TwoWay}"
-                  Margin="0,0,0,8"/>
+        <controls:LabeledToggleSwitch Label="Show insert image dialog"
+                                      IsChecked="{Binding EditorShowInsertImageDialog, Mode=TwoWay}"
+                                      Margin="0,0,0,8"/>
     </StackPanel>
 </UserControl>
